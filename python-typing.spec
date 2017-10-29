@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	tests	# do not perform "make test"
 %bcond_without	python2 # CPython 2.x module
@@ -12,7 +13,7 @@ Version:	3.6.2
 Release:	1
 License:	PSF
 Group:		Libraries/Python
-Source0:	https://pypi.python.org/packages/ca/38/16ba8d542e609997fdcd0214628421c971f8c395084085354b11ff4ac9c3/typing-%{version}.tar.gz
+Source0:	https://files.pythonhosted.org/packages/source/t/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 # Source0-md5:	143af0bf3afd1887622771f2f1ffe8e1
 URL:		https://pypi.python.org/pypi/typing
 BuildRequires:	rpm-pythonprov
@@ -30,7 +31,7 @@ BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Typing – Type Hints for Python
+Typing - Type Hints for Python
 
 Typing defines a standard notation for Python function and variable
 type annotations. The notation can be used for documenting code in a
@@ -44,7 +45,7 @@ Group:		Libraries/Python
 Requires:	python3-modules
 
 %description -n python3-%{module}
-Typing – Type Hints for Python
+Typing - Type Hints for Python
 
 Typing defines a standard notation for Python function and variable
 type annotations. The notation can be used for documenting code in a
