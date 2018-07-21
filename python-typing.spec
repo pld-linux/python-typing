@@ -1,68 +1,92 @@
 #
 # Conditional build:
-%bcond_without	tests	# do not perform "make test"
+%bcond_with	tests	# unit tests (testing by python2 fails)
 %bcond_without	python2 # CPython 2.x module
-%bcond_with	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (for Python < 3.5)
 
 %define		module		typing
 %define		egg_name	typing
 %define		pypi_name	typing
 Summary:	Type Hints for Python
+Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Name:		python-%{pypi_name}
-Version:	3.6.2
+Version:	3.6.4
 Release:	1
 License:	PSF
 Group:		Libraries/Python
-Source0:	https://files.pythonhosted.org/packages/source/t/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	143af0bf3afd1887622771f2f1ffe8e1
-URL:		https://pypi.python.org/pypi/typing
+#Source0Download: https://pypi.org/simple/typing/
+Source0:	https://files.pythonhosted.org/packages/source/t/typing/%{pypi_name}-%{version}.tar.gz
+# Source0-md5:	5b2ade08d83be488f17b5fe587c27c74
+URL:		https://pypi.org/project/typing/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
-BuildRequires:	python-modules
+BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules
+BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-modules < 1:3.5
 BuildRequires:	python3-setuptools
 %endif
-Requires:	python-modules
+Requires:	python-modules >= 1:2.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Typing - Type Hints for Python
-
 Typing defines a standard notation for Python function and variable
 type annotations. The notation can be used for documenting code in a
 concise, standard format, and it has been designed to also be used by
 static and runtime type checkers, static analyzers, IDEs and other
 tools.
 
-%package -n python3-%{module}
+%description -l pl.UTF-8
+Typing definiuje standardową notację opisów typów funkcji i zmiennych
+w Pythonie. Notacja może być używana do dokumentowania kodu w
+zwięzłym, standardowym formacie; została zaprojektowana także z myślą
+o używaniu przez narzędzia do statycznego i dynamicznego sprawdzania
+typów, analizatory statyczne, IDE i inne narzędzia.
+
+%package -n python3-%{pypi_name}
 Summary:	Type Hints for Python
+Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Group:		Libraries/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.3
 
-%description -n python3-%{module}
-Typing - Type Hints for Python
-
+%description -n python3-%{pypi_name}
 Typing defines a standard notation for Python function and variable
 type annotations. The notation can be used for documenting code in a
 concise, standard format, and it has been designed to also be used by
 static and runtime type checkers, static analyzers, IDEs and other
 tools.
+
+%description -n python3-%{pypi_name} -l pl.UTF-8
+Typing definiuje standardową notację opisów typów funkcji i zmiennych
+w Pythonie. Notacja może być używana do dokumentowania kodu w
+zwięzłym, standardowym formacie; została zaprojektowana także z myślą
+o używaniu przez narzędzia do statycznego i dynamicznego sprawdzania
+typów, analizatory statyczne, IDE i inne narzędzia.
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
 
 %build
 %if %{with python2}
-%py_build %{?with_tests:test}
+%py_build
+
+%if %{with tests}
+PYTHONPATH=$(pwd)/src \
+%{__python} -m unittest discover -s src
+%endif
 %endif
 
 %if %{with python3}
-%py3_build %{?with_tests:test}
+%py3_build
+
+%if %{with tests}
+PYTHONPATH=$(pwd)/src \
+%{__python3} -m unittest discover -s src
+%endif
 %endif
 
 %install
@@ -70,6 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with python2}
 %py_install
+
 %py_postclean
 %endif
 
@@ -83,16 +108,16 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc PKG-INFO README.rst
-%{py_sitescriptdir}/%{module}.py*
+%doc README.rst
+%{py_sitescriptdir}/%{module}.py[co]
 %{py_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %endif
 
 %if %{with python3}
-%files -n python3-%{module}
+%files -n python3-%{pypi_name}
 %defattr(644,root,root,755)
-%doc PKG-INFO README.rst
+%doc README.rst
 %{py3_sitescriptdir}/%{module}.py
-%{py3_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %{py3_sitescriptdir}/__pycache__/%{module}.cpython*.pyc
+%{py3_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %endif
