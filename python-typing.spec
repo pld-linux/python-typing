@@ -10,13 +10,13 @@
 Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Name:		python-%{pypi_name}
-Version:	3.6.4
+Version:	3.7.4.1
 Release:	1
-License:	PSF
+License:	PSF v2
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/typing/
 Source0:	https://files.pythonhosted.org/packages/source/t/typing/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	5b2ade08d83be488f17b5fe587c27c74
+# Source0-md5:	0a1ebd4af65b4769e33459004eb20345
 URL:		https://pypi.org/project/typing/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -25,7 +25,7 @@ BuildRequires:	python-modules >= 1:2.7
 BuildRequires:	python-setuptools
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules >= 1:3.3
+BuildRequires:	python3-modules >= 1:3.4
 BuildRequires:	python3-modules < 1:3.5
 BuildRequires:	python3-setuptools
 %endif
@@ -51,7 +51,7 @@ typów, analizatory statyczne, IDE i inne narzędzia.
 Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.3
+Requires:	python3-modules >= 1:3.5
 
 %description -n python3-%{pypi_name}
 Typing defines a standard notation for Python function and variable
