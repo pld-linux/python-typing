@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with	tests	# unit tests (testing by python2 fails)
+%bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
 %bcond_with	python3 # CPython 3.x module (for Python < 3.5)
 
@@ -10,13 +10,13 @@
 Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Name:		python-%{pypi_name}
-Version:	3.7.4.1
-Release:	2
+Version:	3.7.4.3
+Release:	1
 License:	PSF v2
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/typing/
 Source0:	https://files.pythonhosted.org/packages/source/t/typing/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	0a1ebd4af65b4769e33459004eb20345
+# Source0-md5:	276296e7b6b617d4f8b5e8874f240bd4
 URL:		https://pypi.org/project/typing/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -51,7 +51,7 @@ typów, analizatory statyczne, IDE i inne narzędzia.
 Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Group:		Libraries/Python
-Requires:	python3-modules >= 1:3.5
+Requires:	python3-modules >= 1:3.4
 
 %description -n python3-%{pypi_name}
 Typing defines a standard notation for Python function and variable
@@ -76,7 +76,7 @@ typów, analizatory statyczne, IDE i inne narzędzia.
 
 %if %{with tests}
 PYTHONPATH=$(pwd)/src \
-%{__python} -m unittest discover -s src
+%{__python} -m unittest discover -s python2
 %endif
 %endif
 
