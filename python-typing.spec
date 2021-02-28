@@ -11,7 +11,7 @@ Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Name:		python-%{pypi_name}
 Version:	3.7.4.3
-Release:	1
+Release:	2
 License:	PSF v2
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/typing/
