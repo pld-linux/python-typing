@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
-%bcond_with	python3 # CPython 3.x module (for Python < 3.5)
+%bcond_with	python3 # CPython 3.x module (for Python < 3.10)
 
 %define		module		typing
 %define		egg_name	typing
@@ -10,13 +10,13 @@
 Summary:	Type Hints for Python
 Summary(pl.UTF-8):	Podpowiedzi typów dla Pythona
 Name:		python-%{pypi_name}
-Version:	3.7.4.3
-Release:	2
+Version:	3.10.0.0
+Release:	1
 License:	PSF v2
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/typing/
 Source0:	https://files.pythonhosted.org/packages/source/t/typing/%{pypi_name}-%{version}.tar.gz
-# Source0-md5:	276296e7b6b617d4f8b5e8874f240bd4
+# Source0-md5:	d6dd450cfe0c8c6547eef09a0491775d
 URL:		https://pypi.org/project/typing/
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
@@ -26,7 +26,7 @@ BuildRequires:	python-setuptools
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules >= 1:3.4
-BuildRequires:	python3-modules < 1:3.5
+BuildRequires:	python3-modules < 1:3.10
 BuildRequires:	python3-setuptools
 %endif
 Requires:	python-modules >= 1:2.7
@@ -108,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python2}
 %files
 %defattr(644,root,root,755)
-%doc README.rst
+%doc README.md
 %{py_sitescriptdir}/%{module}.py[co]
 %{py_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
 %endif
@@ -116,7 +116,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-%{pypi_name}
 %defattr(644,root,root,755)
-%doc README.rst
+%doc README.md
 %{py3_sitescriptdir}/%{module}.py
 %{py3_sitescriptdir}/__pycache__/%{module}.cpython*.pyc
 %{py3_sitescriptdir}/%{egg_name}-%{version}-py*.egg-info
